@@ -48,7 +48,7 @@ impl GmailClient {
     pub fn new() -> Self {
         Self {
             client: HttpClient::new(),
-            credentials: match Self::credentials() {
+            credentials: match Self::read_credentials() {
                 Ok(credentials) => credentials,
                 Err(error) => {
                     eprintln!("could not get credentials: {}", error);
@@ -58,7 +58,7 @@ impl GmailClient {
         }
     }
 
-    fn refresh_access_token(&mut self) -> Result<(), Box<dyn Error>> {
+    pub fn refresh_access_token(&mut self) -> Result<(), Box<dyn Error>> {
         let refresh_token = self
             .credentials
             .token
@@ -85,7 +85,6 @@ impl GmailClient {
             .error_for_status()?
             .json()?;
 
-        println!("refresh access token response: {:?}", response);
         self.credentials.token.access_token = response.access_token;
 
         utils::write_struct_to_file(
@@ -111,13 +110,19 @@ impl GmailClient {
                 .bearer_auth(&self.credentials.token.access_token)
                 .send()?;
 
+            println!("[REQUEST] {} {}", retry.url().as_str(), retry.status());
             return Ok(retry);
         }
 
+        println!(
+            "[REQUEST] {} {}",
+            response.url().as_str(),
+            response.status()
+        );
         Ok(response)
     }
 
-    fn credentials() -> Result<Credentials, Box<dyn Error>> {
+    fn read_credentials() -> Result<Credentials, Box<dyn Error>> {
         let file = File::open(constants::GMAIL_CREDENTIALS.display().to_string())?;
         let reader = BufReader::new(file);
 
