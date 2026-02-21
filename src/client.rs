@@ -1,5 +1,3 @@
-use std::fs::File;
-use std::io::BufReader;
 use std::process::exit;
 use std::{collections::HashMap, error::Error};
 
@@ -48,7 +46,8 @@ impl GmailClient {
     pub fn new() -> Self {
         Self {
             client: HttpClient::new(),
-            credentials: match Self::read_credentials() {
+            credentials: match utils::read_json(&constants::CREDENTIALS_PATH.display().to_string())
+            {
                 Ok(credentials) => credentials,
                 Err(error) => {
                     eprintln!("could not get credentials: {}", error);
@@ -120,13 +119,5 @@ impl GmailClient {
             response.status()
         );
         Ok(response)
-    }
-
-    fn read_credentials() -> Result<Credentials, Box<dyn Error>> {
-        let file = File::open(constants::GMAIL_CREDENTIALS.display().to_string())?;
-        let reader = BufReader::new(file);
-
-        let credentials: Credentials = serde_json::from_reader(reader)?;
-        Ok(credentials)
     }
 }
