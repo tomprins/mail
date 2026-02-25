@@ -1,14 +1,14 @@
 use std::process::exit;
 use std::{collections::HashMap, error::Error};
 
+use super::constants;
+use super::utils;
 use anyhow::Result;
 use reqwest::{
-    StatusCode,
     blocking::{Client as HttpClient, RequestBuilder, Response},
+    StatusCode,
 };
 use serde::{Deserialize, Serialize};
-
-use crate::{constants, utils};
 
 pub struct GmailClient {
     pub client: HttpClient,

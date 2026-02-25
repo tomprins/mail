@@ -1,11 +1,12 @@
 use anyhow::Result;
+use core::prelude;
 use std::{
     error::Error,
     fs::File,
     io::{BufReader, BufWriter},
 };
 
-use serde::{Serialize, de::DeserializeOwned};
+use serde::{de::DeserializeOwned, Serialize};
 
 pub fn write_struct_to_file<T: Serialize>(value: &T, path: &str) -> Result<()> {
     let file = File::create(path)?;

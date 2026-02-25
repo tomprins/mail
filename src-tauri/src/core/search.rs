@@ -1,5 +1,6 @@
-use crate::constants;
-use crate::utils;
+use super::constants;
+use super::utils;
+use serde::de::DeserializeOwned;
 use serde::Deserialize;
 use serde::Serialize;
 use std::error::Error;
@@ -8,8 +9,11 @@ use typesense::apis::collections_api;
 use typesense::apis::configuration::ApiKey;
 use typesense::apis::configuration::Configuration;
 use typesense::apis::documents_api::import_documents;
+use typesense::apis::documents_api::search_collection;
 use typesense::collection_schema::CollectionSchema;
 use typesense::field::Field;
+use typesense::models::SearchParameters;
+use typesense::models::SearchResult;
 
 #[allow(dead_code)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -248,7 +252,7 @@ pub fn update_collection(
     Ok(())
 }
 
-// TODO shoul probaly be embedded in the runtime clinet
+// TODO should probably be embedded in the runtime client
 pub fn get_typesense_configuration() -> Result<Configuration, Box<dyn Error>> {
     #[derive(Serialize, Deserialize, Debug)]
     struct Credentials {
@@ -293,4 +297,22 @@ where
     println!("imported document into {}: {}", collection_name, result);
 
     Ok(())
+}
+
+pub fn get_messages<D: DeserializeOwned>(
+    runtime: &Runtime,
+    configuration: &Configuration,
+) -> Result<SearchResult<D>, Box<dyn Error>> {
+    let result: SearchResult<D> = runtime
+        .block_on(search_collection(
+            configuration,
+            "mail",
+            SearchParameters {
+                q: "*".to_string(),
+                ..Default::default()
+            },
+        ))
+        .map_err(|error| format!("could not get messages: {error}"))?;
+
+    Ok(result)
 }
