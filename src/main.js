@@ -15,11 +15,20 @@ async function setMailList(query = "*") {
     const mailList = document.getElementById("mail-list")
     mailList.replaceChildren(); // Remove all previously added mails.
 
+    let tempMail;
     for (let index = 0; index < mails.length; index++) {
         const mail = mails[index];
         const card = createMaillistEntry(mail.document.from, mail.document.subject)
         mailList.appendChild(card)
+
+        tempMail = mail;
     }
+
+    const detailView = document.getElementById("detail-view")
+    detailView.replaceChildren()
+
+    const mailBody = DOMPurify.sanitize(tempMail.document.raw_body);
+    detailView.innerHTML = mailBody
 }
 
 function createMaillistEntry(from, subject) {
