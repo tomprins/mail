@@ -2,23 +2,47 @@
 // Be sure to set `app.withGlobalTauri` in `tauri.conf.json` to true
 const invoke = window.__TAURI__.core.invoke;
 
+const searchbarMail = document.getElementById("mail-searchbar").addEventListener("input", searchMail);
 
-async function get_messages() {
-    let data = await invoke('get_messages');
-    data = JSON.parse(data)
-    for (let index = 0; index < data.length; index++) {
-        const mail = data[index];
+function searchMail(event) {
+    console.log(`searching mails for '${event.target.value}'`)
+    setMailList(event.target.value)
+}
 
-        const mailDiv = `<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">${mail.document.from}</h5>
-        <p class="card-text">${mail.document.subject}</p>
-    </div>
-</div>`
+async function setMailList(query = "*") {
+    let mails = await invoke('get_mails', { query: query });
 
-        let mail_list = document.getElementById("mail-list")
-        mail_list.insertAdjacentHTML("beforeend", mailDiv)
+    const mailList = document.getElementById("mail-list")
+    mailList.replaceChildren(); // Remove all previously added mails.
+
+    for (let index = 0; index < mails.length; index++) {
+        const mail = mails[index];
+        const card = createMaillistEntry(mail.document.from, mail.document.subject)
+        mailList.appendChild(card)
     }
 }
 
-get_messages()
+function createMaillistEntry(from, subject) {
+    const cardDiv = document.createElement("div")
+    cardDiv.className = "card"
+
+    const cardBody = document.createElement("div")
+    cardBody.className = "card-body"
+
+    const cardTitle = document.createElement("h5")
+    cardTitle.className = "card-title"
+    cardTitle.textContent = from
+
+    const cardText = document.createElement("p")
+    cardText.className = "card-text"
+    cardText.textContent = subject
+
+    cardBody.appendChild(cardTitle)
+    cardBody.appendChild(cardText)
+    cardDiv.appendChild(cardBody)
+
+    return cardDiv
+}
+
+
+setMailList()

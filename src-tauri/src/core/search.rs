@@ -299,16 +299,18 @@ where
     Ok(())
 }
 
-pub fn get_messages<D: DeserializeOwned>(
+pub fn get_mails<D: DeserializeOwned>(
     runtime: &Runtime,
     configuration: &Configuration,
+    query: &str,
 ) -> Result<SearchResult<D>, Box<dyn Error>> {
     let result: SearchResult<D> = runtime
         .block_on(search_collection(
             configuration,
             "mail",
             SearchParameters {
-                q: "*".to_string(),
+                q: query.to_string(),
+                query_by: "searchable_body".to_string(),
                 ..Default::default()
             },
         ))
