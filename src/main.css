@@ -1,46 +1,50 @@
+html,
 body {
-    height: 100vh;
-    margin: 0;
-    display: flex;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
 }
 
 #list-view {
-    /* make list-view flexbox to align searchbar and mail list as rows */
-    display: flex;
-    flex-direction: column;
+  /* make list-view flexbox to align searchbar and mail list as rows */
+  display: flex;
+  flex-direction: column;
 
-    border-right: solid 2px gray;
-    width: 40%;
-    min-width: 300px;
+  border-right: solid 2px gray;
+  width: 40%;
+  min-width: 300px;
 }
 
-#mail-list {
-    /* use available height in mail-list for mails */
-    flex: 1;
+#maillist {
+  /* use available height in maillist for mails */
+  flex: 1;
 
-    /* make mail-list a flex-box, so mails can be stored as rows. */
-    display: flex;
-    flex-direction: column-reverse;
+  /* make maillist a flex-box, so mails can be stored as rows. */
+  display: flex;
+  flex-direction: column-reverse;
 }
 
-#mail-list>* {
-    border: 2px solid rgb(96 139 168);
-    height: 100px;
-    border-radius: 5px;
-    background-color: rgb(96 139 168 / 0.2);
+.maillist-mail {
+  border: 2px solid rgb(96 139 168);
+  height: 100px;
+  border-radius: 5px;
+  background-color: rgb(96 139 168 / 0.2);
 }
 
-#mail-list p.card-title,
-#mail-list h5.card-title {
-    /* prevent text wrapping, add '...' if width becomes too small */
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+.maillist-mail h5.card-title,
+.maillist-mail p.card-text {
+  /* prevent text wrapping, add '...' if width becomes too small */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #detail-view {
-    flex: 1;
+  flex: 1;
 
-    min-width: 0; /* ensure child does not overflow */
-    overflow: auto; /* add scrollbar */
+  /* ensure child (inner html) does not overflow */
+  min-width: 0;
+
+  /* add scrollbar */
+  overflow: auto;
 }

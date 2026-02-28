@@ -1,33 +1,37 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rust Mail Client</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rust Mail Client</title>
+    <link rel="stylesheet" href="dist/bootstrap.min.css" />
+    <script src="dist/bootstrap.bundle.min.js"></script>
+    <script src="dist/purify.min.js"></script>
 
-  <link rel="stylesheet" href="dist/bootstrap.min.css">
-  <script src="dist/bootstrap.bundle.min.js"></script>
-  <script src="dist/purify.min.js"></script>
+    <link rel="stylesheet" href="main.css" />
+    <script type="module" src="main.js"></script>
+  </head>
 
-  <link rel="stylesheet" href="main.css">
-  <script type="module" src="main.js"></script>
-</head>
+  <body>
+    <div id="list-view">
+      <div class="d-flex">
+        <input
+          id="mail-searchbar"
+          class="form-control m-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+      </div>
 
-<body>
-  <div id="list-view">
-    <div class="d-flex">
-      <input id="mail-searchbar" class="form-control m-2" type="search" placeholder="Search" aria-label="Search" />
+      <div id="maillist">
+        <!-- mails added by javascript -->
+      </div>
     </div>
 
-    <div id="mail-list">
-      <!-- mails added by javascript -->
+    <div id="detail-view">
+      <!-- mail body added by javascript -->
     </div>
-  </div>
-
-  <div id="detail-view">
-    <!-- mail body added by javascript -->
-  </div>
-</body>
-
+  </body>
 </html>
