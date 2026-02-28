@@ -3,6 +3,8 @@ body {
   height: 100vh;
   width: 100vw;
   display: flex;
+
+  background-color: #1e1e1e;
 }
 
 #list-view {
@@ -10,10 +12,67 @@ body {
   display: flex;
   flex-direction: column;
 
-  border-right: solid 2px gray;
+  border-right: solid 1px #474747;
   width: 40%;
-  min-width: 300px;
+  min-width: 400px;
+
 }
+
+#mail-searchbar {
+  display: flex;
+  align-items: center;
+
+  position: relative;
+
+  cursor: text;
+
+  border: solid 1px #474747;
+  border-radius: 9px;
+
+  height: 40px;
+  margin: 10px;
+}
+
+#mail-searchbar-icon {
+  align-self: stretch;
+  width: 28px;
+  margin: 0px 4px 0px 5px;
+}
+
+#mail-searchbar-icon path {
+  fill: #747474;
+}
+
+#search-text {
+  margin: 0;
+  color: #747474;
+}
+
+#mail-searchbar-input {
+  background-color: #00000000;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+#mail-searchbar-input::placeholder {
+  color: #747474;
+}
+
+/* disable blue focus color for all browsers */
+#mail-searchbar-input:focus {
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none
+}
+
+/* disable cross when typing in input field */
+#mail-searchbar-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  display: none;
+}
+
 
 #maillist {
   /* use available height in maillist for mails */
@@ -25,10 +84,13 @@ body {
 }
 
 .maillist-mail {
-  border: 2px solid rgb(96 139 168);
   height: 100px;
-  border-radius: 5px;
-  background-color: rgb(96 139 168 / 0.2);
+  border-radius: 10px;
+
+  cursor: default;
+
+  background-color: #262626;
+  border: 1px solid #474747;
 }
 
 .maillist-mail h5.card-title,

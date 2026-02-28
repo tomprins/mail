@@ -5,9 +5,11 @@ const invoke = window.__TAURI__.core.invoke;
 document.addEventListener("DOMContentLoaded", initialize);
 
 function initialize() {
-  document
-    .getElementById("mail-searchbar")
-    .addEventListener("input", searchMail);
+  document.getElementById("mail-searchbar").addEventListener("click", function (event) {
+    document.getElementById("mail-searchbar-input").focus()
+  })
+
+  document.getElementById("mail-searchbar-input").addEventListener("input", searchMail);
 }
 
 function searchMail(event) {

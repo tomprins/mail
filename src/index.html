@@ -1,37 +1,39 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rust Mail Client</title>
+<html lang="en" data-bs-theme="dark">
 
-    <link rel="stylesheet" href="dist/bootstrap.min.css" />
-    <script src="dist/bootstrap.bundle.min.js"></script>
-    <script src="dist/purify.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rust Mail Client</title>
 
-    <link rel="stylesheet" href="main.css" />
-    <script type="module" src="main.js"></script>
-  </head>
+  <link rel="stylesheet" href="dist/bootstrap.min.css" />
+  <script src="dist/bootstrap.bundle.min.js"></script>
+  <script src="dist/purify.min.js"></script>
 
-  <body>
-    <div id="list-view">
-      <div class="d-flex">
-        <input
-          id="mail-searchbar"
-          class="form-control m-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-      </div>
+  <link rel="stylesheet" href="main.css" />
+  <script type="module" src="main.js"></script>
+</head>
 
-      <div id="maillist">
-        <!-- mails added by javascript -->
-      </div>
+<body>
+  <div id="list-view">
+    <div id="mail-searchbar">
+      <svg id="mail-searchbar-icon" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 101 101">
+        <path
+          d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z">
+        </path>
+      </svg>
+      <input id="mail-searchbar-input" class="form-control m-2" type="search" placeholder="Search..."
+        aria-label="Search" autocomplete="off" />
     </div>
 
-    <div id="detail-view">
-      <!-- mail body added by javascript -->
+    <div id="maillist">
+      <!-- mails added by javascript -->
     </div>
-  </body>
+  </div>
+
+  <div id="detail-view">
+    <!-- mails added by javascript -->
+  </div>
+</body>
+
 </html>
