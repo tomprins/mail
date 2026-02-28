@@ -26,14 +26,7 @@ async function setMaillist(query = "*") {
   for (let index = 0; index < mails.length; index++) {
     const mail = mails[index];
 
-    const maillistEntry = createMaillistEntry(
-      mail.document.from,
-      mail.document.subject,
-    );
-    maillistEntry.addEventListener("mousedown", (event) => {
-      maillistMailClick(event, mail);
-    });
-
+    const maillistEntry = createMaillistEntry(mail);
     mailList.appendChild(maillistEntry);
   }
 }
@@ -46,26 +39,40 @@ function maillistMailClick(event, mail) {
   detailView.innerHTML = mailBody;
 }
 
-function createMaillistEntry(from, subject) {
-  const cardDiv = document.createElement("div");
-  cardDiv.className = "maillist-mail card";
+function createMaillistEntry(mail) {
+  const maillistMail = document.createElement("div");
+  maillistMail.className = "maillist-mail card";
 
-  const cardBody = document.createElement("div");
-  cardBody.className = "card-body";
+  const mailBody = document.createElement("div");
+  mailBody.className = "maillist-mail-body card-body";
 
-  const cardTitle = document.createElement("h5");
-  cardTitle.className = "card-title";
-  cardTitle.textContent = from;
+  const mailTitle = document.createElement("h5");
+  mailTitle.className = "card-title";
+  mailTitle.textContent = mail.document.from;
 
-  const cardText = document.createElement("p");
-  cardText.className = "card-text";
-  cardText.textContent = subject;
+  const mailText = document.createElement("p");
+  mailText.className = "card-text";
+  mailText.textContent = mail.document.subject;
 
-  cardBody.appendChild(cardTitle);
-  cardBody.appendChild(cardText);
-  cardDiv.appendChild(cardBody);
+  mailBody.appendChild(mailTitle);
+  mailBody.appendChild(mailText);
+  maillistMail.appendChild(mailBody);
 
-  return cardDiv;
+  maillistMail.addEventListener("mousedown", (event) => {
+    maillistMailClick(event, mail);
+  });
+
+  maillistMail.addEventListener("mouseenter", (event) => {
+    maillistMail.style.backgroundColor = "#303030"
+    maillistMail.style.borderColor = "#575757"
+  })
+
+  maillistMail.addEventListener("mouseleave", (event) => {
+    maillistMail.style.backgroundColor = "#262626"
+    maillistMail.style.borderColor = "#474747"
+  })
+
+  return maillistMail;
 }
 
 setMaillist();

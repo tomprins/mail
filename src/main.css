@@ -15,7 +15,6 @@ body {
   border-right: solid 1px #474747;
   width: 40%;
   min-width: 400px;
-
 }
 
 #mail-searchbar {
@@ -84,21 +83,39 @@ body {
 }
 
 .maillist-mail {
-  height: 100px;
+  height: 105px;
   border-radius: 10px;
 
   cursor: default;
 
   background-color: #262626;
-  border: 1px solid #474747;
+
+  border: 1px;
+  border-style: solid;
+  border-color: #474747;
 }
 
-.maillist-mail h5.card-title,
-.maillist-mail p.card-text {
-  /* prevent text wrapping, add '...' if width becomes too small */
+.maillist-mail-body {
+  padding: 12px 14px;
+}
+
+.maillist-mail h5.card-title {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.maillist-mail p.card-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  /* wrap for 2 lines */
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+
+  /* then '...' on text overflow */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #detail-view {
