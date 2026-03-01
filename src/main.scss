@@ -1,23 +1,36 @@
+$color-clear: rgb(0, 0, 0, 0);
+$color-primary-background: rgb(30, 30, 30);
+$color-secondary-background: rgb(38, 38, 38);
+$color-secondary-backgound-action: rgb(42, 42, 42);
+$color-box-shadow: rgba(71, 71, 71, 0.251);
+$color-border: rgb(71, 71, 71);
+$color-font: rgb(116, 116, 116);
+$color-focus: $color-font;
+
 html,
 body {
   height: 100vh;
   width: 100vw;
   display: flex;
+
   overflow: hidden;
-  background-color: rgb(30, 30, 30);
+
+  background-color: $color-primary-background;
 }
 
 #list-view {
   /* make list-view flexbox to align searchbar and mail list as rows */
   display: flex;
   flex-direction: column;
-  border-right: solid 1px rgb(71, 71, 71);
+
+  border-right: solid 1px $color-border;
   width: 40%;
   min-width: 400px;
 }
 
 #new-mail-filter-bar {
   display: flex;
+
   height: 38px;
   margin: 10px;
 }
@@ -25,14 +38,17 @@ body {
 #new-mail-button {
   display: flex;
   align-items: center;
+
   cursor: pointer;
+
   width: 79px;
-  background-color: rgb(38, 38, 38);
-  border: 1px solid rgb(71, 71, 71);
+  background-color: $color-secondary-background;
+  border: 1px solid $color-border;
   border-radius: 7px;
-}
-#new-mail-button:hover {
-  background-color: rgb(42, 42, 42);
+
+  &:hover {
+    background-color: $color-secondary-backgound-action;
+  }
 }
 
 #new-mail-button-icon {
@@ -48,51 +64,64 @@ body {
 #mail-searchbar {
   display: flex;
   align-items: center;
+
   position: relative;
+
   cursor: text;
-  border: solid 1px rgb(71, 71, 71);
+
+  border: solid 1px $color-border;
   border-radius: 9px;
+
   height: 40px;
   margin: 0px 10px 5px 10px;
-}
-#mail-searchbar:focus-within {
-  border-color: rgb(116, 116, 116);
-  box-shadow: 0 0 0 0.25rem rgba(71, 71, 71, 0.251);
+
+  &:focus-within {
+    border-color: rgb(116, 116, 116);
+    box-shadow: 0 0 0 0.25rem $color-box-shadow;
+  }
 }
 
 #mail-searchbar-icon {
   align-self: stretch;
   width: 28px;
   margin: 0px 4px 0px 5px;
-}
-#mail-searchbar-icon > path {
-  fill: rgb(116, 116, 116);
+
+  & > path {
+    fill: $color-font;
+  }
 }
 
 #search-text {
   margin: 0;
-  color: rgb(116, 116, 116);
+  color: $color-font;
 }
 
 #mail-searchbar-input {
-  background-color: rgba(0, 0, 0, 0);
+  // TODO this can probably be a mixin
+  background-color: $color-clear;
   border: 0;
   margin: 0;
   padding: 0;
-}
-#mail-searchbar-input::placeholder {
-  color: rgb(116, 116, 116);
-}
-#mail-searchbar-input:focus {
-  box-shadow: none;
-}
-#mail-searchbar-input::-webkit-search-cancel-button {
-  appearance: none;
-  display: none;
+
+  &::placeholder {
+    color: $color-font;
+  }
+
+  // disable blue focus color for all browsers
+  &:focus {
+    box-shadow: none;
+  }
+
+  // disable cross when typing in input field
+  &::-webkit-search-cancel-button {
+    appearance: none;
+    display: none;
+  }
 }
 
 #maillist {
   flex: 1;
+
   display: flex;
   flex-direction: column-reverse;
 }
@@ -100,33 +129,43 @@ body {
 .maillist-mail {
   height: 105px;
   border-radius: 10px;
+
   cursor: pointer;
-  background-color: rgb(38, 38, 38);
-  border: 1px solid rgb(71, 71, 71);
+
+  background-color: $color-secondary-background;
+  border: 1px solid $color-border;
+
   user-select: none;
+
   transition: transform 100ms ease-in-out;
-}
-.maillist-mail:active {
-  transform: scale(0.98);
-}
-.maillist-mail:hover {
-  background-color: #303030;
-  outline: 1px solid #575757;
-}
-.maillist-mail h5.card-title {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.maillist-mail p.card-text {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  /* wrap for 2 lines */
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  /* then '...' on text overflow */
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:hover {
+    background-color: #303030;
+    outline: 1px solid #575757;
+  }
+
+  & h5.card-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  & p.card-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+
+    /* wrap for 2 lines */
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+
+    /* then '...' on text overflow */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .maillist-mail-body {
@@ -135,10 +174,13 @@ body {
 
 #detail-view {
   flex: 1;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+
   position: relative;
+
   /* set minimum width to 0, so a scollbar is added for just the detail view
   when the window gets too small */
   min-width: 0;
@@ -146,26 +188,36 @@ body {
 
 #detail-view-mail-body {
   flex: 1;
+
   /* add scrollbar */
   overflow: auto;
 }
 
 #new-mail-popup {
   flex: 1;
+
   display: flex;
   flex-direction: column;
+
   overflow: hidden;
+
   position: absolute;
-  left: 20px;
-  bottom: 20px;
-  right: 20px;
+
+  $spacing: 20px;
+  left: $spacing;
+  bottom: $spacing;
+  right: $spacing;
+
   height: 40%;
+
   border-radius: 20px;
-  background-color: rgb(38, 38, 38);
+  background-color: $color-secondary-background;
+
   transition: transform 80ms ease-in-out;
-}
-#new-mail-popup.hidden {
-  transform: translateY(calc(40vh + 20px));
+
+  &.hidden {
+    transform: translateY(calc(100vh * 0.4 + $spacing));
+  }
 }
 
 #new-mail-popup-topbar {
@@ -173,16 +225,18 @@ body {
   flex-direction: column;
   gap: 5px;
   margin: 8px 8px 0px 8px;
+
   transition: transform 100ms ease-in-out;
 }
 
 #new-mail-popup-to {
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0);
-}
-#new-mail-popup-to:focus {
-  border-color: rgb(116, 116, 116);
-  box-shadow: 0 0 0 0.25rem rgba(71, 71, 71, 0.251);
+  background-color: $color-clear;
+
+  &:focus {
+    border-color: $color-focus;
+    box-shadow: 0 0 0 0.25rem $color-box-shadow;
+  }
 }
 
 #new-mail-popup-to-row {
@@ -190,19 +244,23 @@ body {
   flex-direction: row;
   align-items: center;
   gap: 7px;
+
   height: 35px;
   font-size: 18px;
-}
-#new-mail-popup-to-row > svg {
-  max-width: 100%;
-  max-height: 100%;
-  padding: 5px 0px;
-  cursor: pointer;
-}
-#new-mail-popup-to-row > p:hover,
-#new-mail-popup-to-row > svg:hover > path {
-  fill: white;
-  color: white;
+
+  & > svg {
+    max-width: 100%;
+    max-height: 100%;
+
+    padding: 5px 0px;
+    cursor: pointer;
+  }
+
+  & > p:hover,
+  & > svg:hover > path {
+    fill: white;
+    color: white;
+  }
 }
 
 #new-mail-popup-add-cc {
@@ -218,13 +276,12 @@ body {
   width: auto;
   height: 35px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0);
-}
-#new-mail-popup-cc:focus,
-#new-mail-popup-bcc:focus,
-#new-mail-popup-subject:focus {
-  border-color: rgb(116, 116, 116);
-  box-shadow: 0 0 0 0.25rem rgba(71, 71, 71, 0.251);
+  background-color: $color-clear;
+
+  &:focus {
+    border-color: $color-focus;
+    box-shadow: 0 0 0 0.25rem $color-box-shadow;
+  }
 }
 
 #new-mail-popup-cc-row {
@@ -246,19 +303,22 @@ body {
 
 #new-mail-popup-body {
   flex: 1;
+
   padding: 12px 14px;
-  background-color: rgba(0, 0, 0, 0);
+
+  background-color: $color-clear;
   border: 0px;
   outline: none;
 }
 
+// style scrollbar
 .scroll::-webkit-scrollbar {
   width: 8px;
 }
 
 .scroll::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: rgb(116, 116, 116);
+  background: $color-font;
   cursor: default;
 }
 
@@ -273,5 +333,3 @@ body {
 .scale-click:active {
   transform: scale(0.9);
 }
-
-/*# sourceMappingURL=main.css.map */

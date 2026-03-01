@@ -1,39 +1,155 @@
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rust Mail Client</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rust Mail Client</title>
+    <link rel="stylesheet" href="dist/bootstrap.min.css" />
+    <script src="dist/bootstrap.bundle.min.js"></script>
+    <script src="dist/purify.min.js"></script>
 
-  <link rel="stylesheet" href="dist/bootstrap.min.css" />
-  <script src="dist/bootstrap.bundle.min.js"></script>
-  <script src="dist/purify.min.js"></script>
+    <link rel="stylesheet" href="main.css" />
+    <script type="module" src="main.js"></script>
+  </head>
 
-  <link rel="stylesheet" href="main.css" />
-  <script type="module" src="main.js"></script>
-</head>
+  <body>
+    <div id="list-view">
+      <div id="new-mail-filter-bar">
+        <div id="new-mail-button" class="scale-click">
+          <svg
+            id="new-mail-button-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            class="bi bi-envelope"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"
+            />
+          </svg>
+          <p id="new-mail-button-text">New</p>
+        </div>
+      </div>
 
-<body>
-  <div id="list-view">
-    <div id="mail-searchbar">
-      <svg id="mail-searchbar-icon" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 101 101">
-        <path
-          d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z">
-        </path>
-      </svg>
-      <input id="mail-searchbar-input" class="form-control m-2" type="search" placeholder="Search..."
-        aria-label="Search" autocomplete="off" />
+      <div id="mail-searchbar">
+        <svg
+          id="mail-searchbar-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          xml:space="preserve"
+          viewBox="0 0 101 101"
+        >
+          <path
+            d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z"
+          ></path>
+        </svg>
+        <input
+          id="mail-searchbar-input"
+          class="form-control m-2"
+          type="search"
+          placeholder="Search..."
+          aria-label="Search"
+          autocomplete="off"
+        />
+      </div>
+
+      <div id="maillist">
+        <!-- mails added by javascript -->
+      </div>
     </div>
 
-    <div id="maillist">
-      <!-- mails added by javascript -->
+    <div id="detail-view">
+      <div id="detail-view-mail-body">
+        <!-- mails added by javascript -->
+      </div>
+      <div id="new-mail-popup">
+        <div id="new-mail-popup-topbar">
+          <div id="new-mail-popup-to-row">
+            <input
+              id="new-mail-popup-to"
+              class="form-control"
+              type="text"
+              placeholder="To"
+              aria-label="To"
+              autocomplete="off"
+            />
+
+            <p id="new-mail-popup-add-cc" class="scale-click">CC</p>
+
+            <svg
+              id="new-mail-popup-maximize-icon"
+              hidden
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              class="bi bi-arrows-angle-expand scale-click"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707"
+              />
+            </svg>
+
+            <svg
+              id="new-mail-popup-minimize-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              class="bi bi-arrows-angle-contract scale-click"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 1 0 1 0v-3.975a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707M15.828.172a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 1 0-1 0v3.975a.5.5 0 0 0 .5.5H14.5a.5.5 0 0 0 0-1h-2.768L15.828.879a.5.5 0 0 0 0-.707"
+              />
+            </svg>
+
+            <svg
+              id="new-mail-popup-close-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              class="bi bi-x-lg scale-click"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+              />
+            </svg>
+          </div>
+
+          <div id="new-mail-popup-cc-row" hidden>
+            <input
+              id="new-mail-popup-cc"
+              class="form-control"
+              type="text"
+              placeholder="CC"
+              aria-label="cc"
+              autocomplete="off"
+            />
+            <p id="new-mail-popup-add-bcc" class="scale-click">BCC</p>
+          </div>
+
+          <input
+            id="new-mail-popup-bcc"
+            class="form-control"
+            hidden
+            type="text"
+            placeholder="BCC"
+            aria-label="bcc"
+            autocomplete="off"
+          />
+
+          <input
+            id="new-mail-popup-subject"
+            class="form-control"
+            type="text"
+            placeholder="Subject"
+            aria-label="subject"
+            autocomplete="off"
+          />
+        </div>
+
+        <textarea id="new-mail-popup-body" class="scroll"></textarea>
+      </div>
     </div>
-  </div>
-
-  <div id="detail-view">
-    <!-- mails added by javascript -->
-  </div>
-</body>
-
+  </body>
 </html>
