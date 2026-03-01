@@ -104,7 +104,7 @@ body {
   background-color: rgb(38, 38, 38);
   border: 1px solid rgb(71, 71, 71);
   user-select: none;
-  transition: transform 100ms ease-in-out;
+  transition: transform 100ms ease;
 }
 .maillist-mail:active {
   transform: scale(0.98);
@@ -159,13 +159,16 @@ body {
   left: 20px;
   bottom: 20px;
   right: 20px;
-  height: 40%;
+  height: 40vh;
   border-radius: 20px;
   background-color: rgb(38, 38, 38);
-  transition: transform 80ms ease-in-out;
+  transition: transform 80ms ease, height 80ms ease;
 }
-#new-mail-popup.hidden {
-  transform: translateY(calc(40vh + 20px));
+#new-mail-popup.closed {
+  transform: translateY(calc(100% + 20px));
+}
+#new-mail-popup.minimized {
+  height: 51px;
 }
 
 #new-mail-popup-topbar {
@@ -173,7 +176,32 @@ body {
   flex-direction: column;
   gap: 5px;
   margin: 8px 8px 0px 8px;
-  transition: transform 100ms ease-in-out;
+  transition: transform 100ms ease;
+}
+
+#new-mail-popup-to-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  height: 35px;
+  margin-right: 2px;
+}
+#new-mail-popup-to-row > svg {
+  max-width: 100%;
+  max-height: 100%;
+  padding: 5px 0px;
+  cursor: pointer;
+}
+#new-mail-popup-to-row > svg#new-mail-popup-maximize-icon {
+  padding-left: 2px;
+}
+#new-mail-popup-to-row > p {
+  font-size: 18px;
+}
+#new-mail-popup-to-row > p:hover, #new-mail-popup-to-row > svg:hover > path {
+  fill: white;
+  color: white;
 }
 
 #new-mail-popup-to {
@@ -183,26 +211,6 @@ body {
 #new-mail-popup-to:focus {
   border-color: rgb(116, 116, 116);
   box-shadow: 0 0 0 0.25rem rgba(71, 71, 71, 0.251);
-}
-
-#new-mail-popup-to-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 7px;
-  height: 35px;
-  font-size: 18px;
-}
-#new-mail-popup-to-row > svg {
-  max-width: 100%;
-  max-height: 100%;
-  padding: 5px 0px;
-  cursor: pointer;
-}
-#new-mail-popup-to-row > p:hover,
-#new-mail-popup-to-row > svg:hover > path {
-  fill: white;
-  color: white;
 }
 
 #new-mail-popup-add-cc {
@@ -232,10 +240,14 @@ body {
   flex-direction: row;
   align-items: center;
   gap: 7px;
+  height: 35px;
+  margin-right: 2px;
 }
 
-#new-mail-popup-cc {
+#new-mail-popup-cc,
+#new-mail-popup-bcc {
   width: 100%;
+  height: 35px;
 }
 
 #new-mail-popup-add-bcc {
@@ -250,6 +262,7 @@ body {
   background-color: rgba(0, 0, 0, 0);
   border: 0px;
   outline: none;
+  resize: none;
 }
 
 .scroll::-webkit-scrollbar {
@@ -262,12 +275,14 @@ body {
   cursor: default;
 }
 
-.scroll::-webkit-scrollbar-corner {
-  display: none;
+.hidden {
+  display: none !important;
 }
 
 .scale-click {
-  transition: transform 50ms ease-in-out;
+  transition: transform 50ms ease;
+  user-select: none;
+  cursor: pointer;
 }
 
 .scale-click:active {

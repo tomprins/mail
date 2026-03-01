@@ -7,47 +7,59 @@ const scrollbarWidth = getScrollbarWidth();
 
 function initialize() {
   const newMailPopup = document.getElementById("new-mail-popup");
+  const mailSearchbarInput = document.getElementById("mail-searchbar-input");
+  const CCRow = document.getElementById("new-mail-popup-cc-row");
+  const BCCRow = document.getElementById("new-mail-popup-bcc");
+  const closeIcon = document.getElementById("new-mail-popup-close-icon");
+  const maximizeIcon = document.getElementById("new-mail-popup-maximize-icon");
+  const minimizeIcon = document.getElementById("new-mail-popup-minimize-icon");
+  const addCCIcon = document.getElementById("new-mail-popup-add-cc");
+  const addBCCIcon = document.getElementById("new-mail-popup-add-bcc");
 
   document
     .getElementById("mail-searchbar")
     .addEventListener("click", function (event) {
-      document.getElementById("mail-searchbar-input").focus();
+      mailSearchbarInput.focus();
     });
 
-  document
-    .getElementById("mail-searchbar-input")
-    .addEventListener("input", searchMail);
+  mailSearchbarInput.addEventListener("input", searchMail);
 
   document
     .getElementById("new-mail-button")
     .addEventListener("mousedown", function (event) {
-      newMailPopup.classList.remove("hidden");
+      newMailPopup.classList.remove("closed");
     });
 
-  document
-    .getElementById("new-mail-popup-close-icon")
-    .addEventListener("mousedown", function (event) {
-      newMailPopup.classList.add("hidden");
-    });
+  closeIcon.addEventListener("mousedown", function (event) {
+    newMailPopup.classList.add("closed");
+  });
 
-  // TODO to class list
-  document
-    .getElementById("new-mail-popup-add-cc")
-    .addEventListener("mousedown", function (event) {
-      document
-        .getElementById("new-mail-popup-cc-row")
-        .toggleAttribute("hidden");
+  addCCIcon.addEventListener("mousedown", function (event) {
+    CCRow.classList.toggle("hidden");
+    BCCRow.classList.add("hidden");
+  });
 
-      document
-        .getElementById("new-mail-popup-bcc")
-        .setAttribute("hidden", "hidden");
-    });
+  addBCCIcon.addEventListener("mousedown", function (event) {
+    BCCRow.classList.toggle("hidden");
+  });
 
-  document
-    .getElementById("new-mail-popup-add-bcc")
-    .addEventListener("mousedown", function (event) {
-      document.getElementById("new-mail-popup-bcc").toggleAttribute("hidden");
-    });
+  minimizeIcon.addEventListener("mousedown", function (event) {
+    newMailPopup.classList.add("minimized");
+    minimizeIcon.classList.add("hidden");
+    maximizeIcon.classList.remove("hidden");
+
+    addCCIcon.classList.add("hidden");
+    CCRow.classList.add("hidden");
+    BCCRow.classList.add("hidden");
+  });
+
+  maximizeIcon.addEventListener("mousedown", function (event) {
+    newMailPopup.classList.remove("minimized");
+    minimizeIcon.classList.remove("hidden");
+    maximizeIcon.classList.add("hidden");
+
+    addCCIcon.classList.remove("hidden");
+  });
 }
 
 function searchMail(event) {

@@ -137,7 +137,7 @@ body {
 
   user-select: none;
 
-  transition: transform 100ms ease-in-out;
+  transition: transform 100ms ease;
 
   &:active {
     transform: scale(0.98);
@@ -193,6 +193,9 @@ body {
   overflow: auto;
 }
 
+$new-mail-popup-row-height: 35px;
+$new-mail-popup-top-y-padding: 8px;
+
 #new-mail-popup {
   flex: 1;
 
@@ -208,15 +211,24 @@ body {
   bottom: $spacing;
   right: $spacing;
 
-  height: 40%;
+  $popup-height: calc(100vh * 0.4);
+  height: $popup-height;
 
   border-radius: 20px;
   background-color: $color-secondary-background;
 
-  transition: transform 80ms ease-in-out;
+  transition:
+    transform 80ms ease,
+    height 80ms ease;
 
-  &.hidden {
-    transform: translateY(calc(100vh * 0.4 + $spacing));
+  &.closed {
+    transform: translateY(calc(100% + $spacing));
+  }
+
+  &.minimized {
+    height: calc(
+      $new-mail-popup-row-height + (2 * $new-mail-popup-top-y-padding)
+    );
   }
 }
 
@@ -224,9 +236,41 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin: 8px 8px 0px 8px;
+  margin: $new-mail-popup-top-y-padding 8px 0px 8px;
 
-  transition: transform 100ms ease-in-out;
+  transition: transform 100ms ease;
+}
+
+#new-mail-popup-to-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+
+  height: $new-mail-popup-row-height;
+  margin-right: 2px;
+
+  & > svg {
+    max-width: 100%;
+    max-height: 100%;
+
+    padding: 5px 0px;
+    cursor: pointer;
+
+    &#new-mail-popup-maximize-icon {
+      padding-left: 2px;
+    }
+  }
+
+  & > p {
+    font-size: 18px;
+  }
+
+  & > p:hover,
+  & > svg:hover > path {
+    fill: white;
+    color: white;
+  }
 }
 
 #new-mail-popup-to {
@@ -236,30 +280,6 @@ body {
   &:focus {
     border-color: $color-focus;
     box-shadow: 0 0 0 0.25rem $color-box-shadow;
-  }
-}
-
-#new-mail-popup-to-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 7px;
-
-  height: 35px;
-  font-size: 18px;
-
-  & > svg {
-    max-width: 100%;
-    max-height: 100%;
-
-    padding: 5px 0px;
-    cursor: pointer;
-  }
-
-  & > p:hover,
-  & > svg:hover > path {
-    fill: white;
-    color: white;
   }
 }
 
@@ -274,7 +294,7 @@ body {
 #new-mail-popup-bcc,
 #new-mail-popup-subject {
   width: auto;
-  height: 35px;
+  height: $new-mail-popup-row-height;
   border-radius: 10px;
   background-color: $color-clear;
 
@@ -289,10 +309,16 @@ body {
   flex-direction: row;
   align-items: center;
   gap: 7px;
+
+  height: 35px;
+
+  margin-right: 2px;
 }
 
-#new-mail-popup-cc {
+#new-mail-popup-cc,
+#new-mail-popup-bcc {
   width: 100%;
+  height: $new-mail-popup-row-height;
 }
 
 #new-mail-popup-add-bcc {
@@ -309,6 +335,7 @@ body {
   background-color: $color-clear;
   border: 0px;
   outline: none;
+  resize: none;
 }
 
 // style scrollbar
@@ -322,12 +349,14 @@ body {
   cursor: default;
 }
 
-.scroll::-webkit-scrollbar-corner {
-  display: none;
+.hidden {
+  display: none !important;
 }
 
 .scale-click {
-  transition: transform 50ms ease-in-out;
+  transition: transform 50ms ease;
+  user-select: none;
+  cursor: pointer;
 }
 
 .scale-click:active {
