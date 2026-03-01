@@ -195,6 +195,7 @@ body {
 
 $new-mail-popup-row-height: 35px;
 $new-mail-popup-top-y-padding: 8px;
+$new-mail-popup-top-y-gap: 5px;
 
 #new-mail-popup {
   flex: 1;
@@ -235,8 +236,9 @@ $new-mail-popup-top-y-padding: 8px;
 #new-mail-popup-topbar {
   display: flex;
   flex-direction: column;
-  gap: 5px;
   margin: $new-mail-popup-top-y-padding 8px 0px 8px;
+
+  position: relative;
 
   transition: transform 100ms ease;
 }
@@ -248,7 +250,9 @@ $new-mail-popup-top-y-padding: 8px;
   gap: 7px;
 
   height: $new-mail-popup-row-height;
+
   margin-right: 2px;
+  background-color: $color-secondary-background;
 
   & > svg {
     max-width: 100%;
@@ -281,9 +285,13 @@ $new-mail-popup-top-y-padding: 8px;
     border-color: $color-focus;
     box-shadow: 0 0 0 0.25rem $color-box-shadow;
   }
+
+  &.minimized {
+    border-radius: 14px;
+  }
 }
 
-#new-mail-popup-add-cc {
+#new-mail-popup-toggle-cc {
   margin: 0;
   padding: 0px 2px;
   cursor: pointer;
@@ -293,7 +301,6 @@ $new-mail-popup-top-y-padding: 8px;
 #new-mail-popup-cc,
 #new-mail-popup-bcc,
 #new-mail-popup-subject {
-  width: auto;
   height: $new-mail-popup-row-height;
   border-radius: 10px;
   background-color: $color-clear;
@@ -301,6 +308,48 @@ $new-mail-popup-top-y-padding: 8px;
   &:focus {
     border-color: $color-focus;
     box-shadow: 0 0 0 0.25rem $color-box-shadow;
+  }
+}
+
+#new-mail-popup-topbar > * {
+  position: absolute;
+
+  width: 100%;
+  background-color: $color-secondary-background;
+
+  transition: transform 50ms ease;
+
+  &#new-mail-popup-to-row {
+    z-index: 3;
+  }
+  &#new-mail-popup-cc-row {
+    z-index: 2;
+  }
+  &#new-mail-popup-bcc {
+    z-index: 1;
+  }
+  &#new-mail-popup-subject {
+    z-index: 0;
+  }
+
+  // TODO can probaly be done in an better way (function?)
+  &.index-0 {
+    transform: translateY(0px);
+  }
+  &.index-1 {
+    transform: translateY(
+      calc($new-mail-popup-row-height + $new-mail-popup-top-y-gap)
+    );
+  }
+  &.index-2 {
+    transform: translateY(
+      calc(($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 2)
+    );
+  }
+  &.index-3 {
+    transform: translateY(
+      calc($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 3
+    );
   }
 }
 
@@ -321,14 +370,14 @@ $new-mail-popup-top-y-padding: 8px;
   height: $new-mail-popup-row-height;
 }
 
-#new-mail-popup-add-bcc {
+#new-mail-popup-toggle-bcc {
   font-size: 18px;
   margin: 0;
   cursor: pointer;
 }
 
 #new-mail-popup-body {
-  flex: 1;
+  margin-top: auto;
 
   padding: 12px 14px;
 
@@ -336,6 +385,29 @@ $new-mail-popup-top-y-padding: 8px;
   border: 0px;
   outline: none;
   resize: none;
+
+  // TODO can probably be improved with sass function.
+  // resize the text area depending on the rows taken up by the topbar.
+  &.index-0 {
+    height: calc(
+      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 1)
+    );
+  }
+  &.index-1 {
+    height: calc(
+      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 2)
+    );
+  }
+  &.index-2 {
+    height: calc(
+      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 3)
+    );
+  }
+  &.index-3 {
+    height: calc(
+      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 4)
+    );
+  }
 }
 
 // style scrollbar

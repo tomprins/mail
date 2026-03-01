@@ -74,7 +74,7 @@
               autocomplete="off"
             />
 
-            <p id="new-mail-popup-add-cc" class="scale-click">CC</p>
+            <p id="new-mail-popup-toggle-cc" class="scale-click">CC</p>
 
             <svg
               id="new-mail-popup-maximize-icon"
@@ -115,7 +115,7 @@
             </svg>
           </div>
 
-          <div id="new-mail-popup-cc-row" class="hidden">
+          <div id="new-mail-popup-cc-row" class="index-0">
             <input
               id="new-mail-popup-cc"
               class="form-control"
@@ -124,12 +124,12 @@
               aria-label="cc"
               autocomplete="off"
             />
-            <p id="new-mail-popup-add-bcc" class="scale-click">BCC</p>
+            <p id="new-mail-popup-toggle-bcc" class="scale-click">BCC</p>
           </div>
 
           <input
             id="new-mail-popup-bcc"
-            class="form-control hidden"
+            class="form-control index-0"
             type="text"
             placeholder="BCC"
             aria-label="bcc"
@@ -138,7 +138,7 @@
 
           <input
             id="new-mail-popup-subject"
-            class="form-control"
+            class="form-control index-1"
             type="text"
             placeholder="Subject"
             aria-label="subject"
@@ -146,7 +146,7 @@
           />
         </div>
 
-        <textarea id="new-mail-popup-body" class="scroll"></textarea>
+        <textarea id="new-mail-popup-body" class="scroll index-1"></textarea>
       </div>
     </div>
   </body>
