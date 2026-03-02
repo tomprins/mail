@@ -25,7 +25,6 @@ body {
 #new-mail-button {
   display: flex;
   align-items: center;
-  cursor: pointer;
   width: 79px;
   background-color: rgb(38, 38, 38);
   border: 1px solid rgb(71, 71, 71);
@@ -34,15 +33,15 @@ body {
 #new-mail-button:hover {
   background-color: rgb(42, 42, 42);
 }
-
-#new-mail-button-icon {
+#new-mail-button #new-mail-button-icon {
   width: 22px;
-  margin: 5px 8px;
+  margin: 0px 8px;
+  fill: rgb(222, 226, 230);
 }
-
-#new-mail-button-text {
+#new-mail-button #new-mail-button-text {
   margin: 0;
   user-select: none;
+  fill: rgb(222, 226, 230);
 }
 
 #mail-searchbar {
@@ -100,11 +99,9 @@ body {
 .maillist-mail {
   height: 105px;
   border-radius: 10px;
-  cursor: pointer;
   background-color: rgb(38, 38, 38);
   border: 1px solid rgb(71, 71, 71);
   user-select: none;
-  transition: transform 100ms ease;
 }
 .maillist-mail:active {
   transform: scale(0.98);
@@ -162,9 +159,7 @@ body {
   height: 40vh;
   border-radius: 20px;
   background-color: rgb(38, 38, 38);
-  transition:
-    transform 80ms ease,
-    height 80ms ease;
+  transition: transform 80ms ease, height 80ms ease;
 }
 #new-mail-popup.closed {
   transform: translateY(calc(100% + 20px));
@@ -175,15 +170,27 @@ body {
 #new-mail-popup.maximized {
   height: 96vh;
 }
+#new-mail-popup svg > path {
+  fill: rgb(222, 226, 230);
+}
+#new-mail-popup svg:hover > path {
+  fill: white;
+}
+#new-mail-popup svg.disabled > path {
+  fill: rgb(116, 116, 116);
+}
 
 #new-mail-popup-topbar {
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: transform 100ms ease;
+}
+#new-mail-popup-topbar p {
+  font-size: 20px;
+  margin: 0;
 }
 
-#new-mail-popup-to-row {
+#new-mail-popup-subject-row {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -192,51 +199,49 @@ body {
   padding-right: 2px;
   background-color: rgb(38, 38, 38);
 }
-#new-mail-popup-to-row > svg {
+#new-mail-popup-subject-row > svg {
   height: 100%;
   padding: 6px 0px;
   flex-shrink: 0;
-  cursor: pointer;
 }
-#new-mail-popup-to-row > p {
+#new-mail-popup-subject-row > p {
   font-size: 20px;
 }
-#new-mail-popup-to-row > p:hover,
-#new-mail-popup-to-row > svg:hover > path {
-  fill: white;
-  color: white;
-}
 
-#new-mail-popup-to {
-  flex: 1;
+#new-mail-popup-to-row {
+  display: flex;
+  flex-direction: row;
+  height: 35px;
+}
+#new-mail-popup-to-row #new-mail-popup-to-input {
+  width: 345px;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0);
+  height: 35px;
 }
-#new-mail-popup-to:focus {
+#new-mail-popup-to-row #new-mail-popup-to-input:focus {
   border-color: rgb(116, 116, 116);
   box-shadow: 0 0 0 0.25rem rgba(71, 71, 71, 0.251);
 }
-#new-mail-popup.minimized #new-mail-popup-to {
+#new-mail-popup.minimized #new-mail-popup-to-row #new-mail-popup-to-input {
   border-radius: 14px;
   margin-right: 4px;
 }
-
-#new-mail-popup-toggle-cc {
-  margin: 0;
-  padding: 0px 2px;
-  cursor: pointer;
+#new-mail-popup-to-row #new-mail-popup-toggle-cc {
+  flex: 1;
+  padding-left: 13px;
   user-select: none;
 }
 
-#new-mail-popup-cc,
-#new-mail-popup-bcc,
+#new-mail-popup-cc-input,
+#new-mail-popup-bcc-input,
 #new-mail-popup-subject {
   height: 35px;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0);
 }
-#new-mail-popup-cc:focus,
-#new-mail-popup-bcc:focus,
+#new-mail-popup-cc-input:focus,
+#new-mail-popup-bcc-input:focus,
 #new-mail-popup-subject:focus {
   border-color: rgb(116, 116, 116);
   box-shadow: 0 0 0 0.25rem rgba(71, 71, 71, 0.251);
@@ -248,16 +253,16 @@ body {
   background-color: rgb(38, 38, 38);
   transition: transform 50ms ease;
 }
-#new-mail-popup-topbar > *#new-mail-popup-to-row {
+#new-mail-popup-topbar > *#new-mail-popup-subject-row {
   z-index: 3;
 }
-#new-mail-popup-topbar > *#new-mail-popup-cc-row {
+#new-mail-popup-topbar > *#new-mail-popup-to-row {
   z-index: 2;
 }
-#new-mail-popup-topbar > *#new-mail-popup-bcc {
+#new-mail-popup-topbar > *#new-mail-popup-cc-row {
   z-index: 1;
 }
-#new-mail-popup-topbar > *#new-mail-popup-subject {
+#new-mail-popup-topbar > *#new-mail-popup-bcc-row {
   z-index: 0;
 }
 #new-mail-popup-topbar > *.index-0 {
@@ -282,16 +287,10 @@ body {
   margin-right: 2px;
 }
 
-#new-mail-popup-cc,
-#new-mail-popup-bcc {
+#new-mail-popup-cc-input,
+#new-mail-popup-bcc-input {
   width: 100%;
   height: 35px;
-}
-
-#new-mail-popup-toggle-bcc {
-  font-size: 20px;
-  margin: 0;
-  cursor: pointer;
 }
 
 #new-mail-popup-body {
@@ -301,6 +300,7 @@ body {
   border: 0px;
   outline: none;
   resize: none;
+  transition: height 80ms ease;
 }
 #new-mail-popup-body.index-0 {
   height: calc(100% - 40px);
@@ -309,9 +309,12 @@ body {
   height: calc(100% - 80px);
 }
 #new-mail-popup-body.index-2 {
-  height: calc(100% - 120px);
+  height: calc(100% - 80px);
 }
 #new-mail-popup-body.index-3 {
+  height: calc(100% - 120px);
+}
+#new-mail-popup-body.index-4 {
   height: calc(100% - 160px);
 }
 
@@ -330,9 +333,7 @@ body {
 }
 
 .scale-click {
-  transition: transform 50ms ease;
   user-select: none;
-  cursor: pointer;
 }
 
 .scale-click:active {

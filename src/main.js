@@ -4,7 +4,13 @@ const invoke = window.__TAURI__.core.invoke;
 
 document.addEventListener("DOMContentLoaded", initialize);
 const scrollbarWidth = getScrollbarWidth();
-const topbarIndexLevels = ["index-0", "index-1", "index-2", "index-3"];
+const topbarIndexLevels = [
+  "index-0",
+  "index-1",
+  "index-2",
+  "index-3",
+  "index-4",
+];
 const newMailPopupSizes = ["minimized", "default", "maximized"];
 
 function initialize() {
@@ -24,21 +30,27 @@ function initialize() {
     newMailPopup.classList.remove("closed");
     defaultSizedNewMailPopup();
 
-    setIndexLevel(subjectRow, "index-1");
+    setIndexLevel(toRow, "index-1");
   });
 
   // create mail popup
+  const toRow = document.getElementById("new-mail-popup-to-row");
   const CCRow = document.getElementById("new-mail-popup-cc-row");
-  const BCCRow = document.getElementById("new-mail-popup-bcc");
-  const subjectRow = document.getElementById("new-mail-popup-subject");
+  const BCCRow = document.getElementById("new-mail-popup-bcc-input");
   const closeIcon = document.getElementById("new-mail-popup-close-icon");
   const maximizeIcon = document.getElementById("new-mail-popup-maximize-icon");
   const minimizeIcon = document.getElementById("new-mail-popup-minimize-icon");
   const toggleCCIcon = document.getElementById("new-mail-popup-toggle-cc");
-  const toggleBCCIcon = document.getElementById("new-mail-popup-toggle-bcc");
+  const toggleBCCIcon = document.getElementById("new-mail-popup-bcc-toggle");
+  const createMailBody = document.getElementById("new-mail-popup-body");
 
   closeIcon.addEventListener("mousedown", function (event) {
     setMailPopupState("closed");
+
+    setIndexLevel(toRow, "index-1");
+    setIndexLevel(CCRow, "index-0");
+    setIndexLevel(BCCRow, "index-0");
+    setIndexLevel(createMailBody, "index-2");
 
     setTimeout(() => {
       defaultSizedNewMailPopup();
@@ -46,28 +58,28 @@ function initialize() {
   });
 
   toggleCCIcon.addEventListener("mousedown", function (event) {
-    const isToggled = CCRow.classList.contains("index-1");
+    const isToggled = CCRow.classList.contains("index-2");
 
     if (!isToggled) {
-      setIndexLevel(subjectRow, "index-2");
+      setIndexLevel(CCRow, "index-2");
+      setIndexLevel(BCCRow, "index-2");
+      setIndexLevel(createMailBody, "index-3");
+    } else {
       setIndexLevel(CCRow, "index-1");
       setIndexLevel(BCCRow, "index-1");
-    } else {
-      setIndexLevel(subjectRow, "index-1");
-      setIndexLevel(CCRow, "index-0");
-      setIndexLevel(BCCRow, "index-0");
+      setIndexLevel(createMailBody, "index-2");
     }
   });
 
   toggleBCCIcon.addEventListener("mousedown", function (event) {
-    const isToggled = BCCRow.classList.contains("index-2");
+    const isToggled = BCCRow.classList.contains("index-3");
 
     if (!isToggled) {
-      setIndexLevel(subjectRow, "index-3");
-      setIndexLevel(BCCRow, "index-2");
+      setIndexLevel(BCCRow, "index-3");
+      setIndexLevel(createMailBody, "index-4");
     } else {
-      setIndexLevel(subjectRow, "index-2");
-      setIndexLevel(BCCRow, "index-1");
+      setIndexLevel(BCCRow, "index-2");
+      setIndexLevel(createMailBody, "index-3");
     }
   });
 
@@ -80,9 +92,9 @@ function initialize() {
       minimizeNewMailPopup();
 
       // set all topbar rows on index 0.
+      setIndexLevel(toRow, "index-0");
       setIndexLevel(CCRow, "index-0");
       setIndexLevel(BCCRow, "index-0");
-      setIndexLevel(subjectRow, "index-0");
     }
   });
 
@@ -91,7 +103,7 @@ function initialize() {
 
     if (isMinimized) {
       defaultSizedNewMailPopup();
-      setIndexLevel(subjectRow, "index-1");
+      setIndexLevel(toRow, "index-1");
     } else {
       maximizedNewMailPopup();
     }
@@ -105,11 +117,9 @@ function minimizeNewMailPopup() {
   // add / remove icons.
   const minimizeIcon = document.getElementById("new-mail-popup-minimize-icon");
   const maximizeIcon = document.getElementById("new-mail-popup-maximize-icon");
-  const toggleCCIcon = document.getElementById("new-mail-popup-toggle-cc");
 
-  minimizeIcon.classList.add("hidden");
-  maximizeIcon.classList.remove("hidden");
-  toggleCCIcon.classList.add("hidden");
+  minimizeIcon.classList.add("disabled");
+  maximizeIcon.classList.remove("disabled");
 }
 
 function defaultSizedNewMailPopup() {
@@ -119,11 +129,9 @@ function defaultSizedNewMailPopup() {
   // add / remove icons.
   const minimizeIcon = document.getElementById("new-mail-popup-minimize-icon");
   const maximizeIcon = document.getElementById("new-mail-popup-maximize-icon");
-  const toggleCCIcon = document.getElementById("new-mail-popup-toggle-cc");
 
-  minimizeIcon.classList.remove("hidden");
-  maximizeIcon.classList.remove("hidden");
-  toggleCCIcon.classList.remove("hidden");
+  minimizeIcon.classList.remove("disabled");
+  maximizeIcon.classList.remove("disabled");
 }
 
 function maximizedNewMailPopup() {
@@ -133,11 +141,9 @@ function maximizedNewMailPopup() {
   // add / remove icons.
   const minimizeIcon = document.getElementById("new-mail-popup-minimize-icon");
   const maximizeIcon = document.getElementById("new-mail-popup-maximize-icon");
-  const toggleCCIcon = document.getElementById("new-mail-popup-toggle-cc");
 
-  minimizeIcon.classList.remove("hidden");
-  maximizeIcon.classList.add("hidden");
-  toggleCCIcon.classList.remove("hidden");
+  minimizeIcon.classList.remove("disabled");
+  maximizeIcon.classList.add("disabled");
 }
 
 function setMailPopupState(state) {

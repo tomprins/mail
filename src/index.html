@@ -64,22 +64,19 @@
       </div>
       <div id="new-mail-popup">
         <div id="new-mail-popup-topbar">
-          <div id="new-mail-popup-to-row">
+          <div id="new-mail-popup-subject-row">
             <input
-              id="new-mail-popup-to"
-              class="form-control"
+              id="new-mail-popup-subject"
+              class="form-control index-0"
               type="text"
-              placeholder="To"
-              aria-label="To"
+              placeholder="Subject"
+              aria-label="subject"
               autocomplete="off"
             />
-
-            <p id="new-mail-popup-toggle-cc" class="scale-click">CC</p>
 
             <svg
               id="new-mail-popup-minimize-icon"
               xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
               class="bi bi-arrows-angle-contract scale-click"
               viewBox="0 0 16 16"
             >
@@ -92,7 +89,6 @@
             <svg
               id="new-mail-popup-maximize-icon"
               xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
               class="bi bi-arrows-angle-expand scale-click"
               viewBox="0 0 16 16"
             >
@@ -105,7 +101,6 @@
             <svg
               id="new-mail-popup-close-icon"
               xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
               class="bi bi-x-lg scale-click"
               viewBox="0 0 16 16"
             >
@@ -115,38 +110,41 @@
             </svg>
           </div>
 
-          <div id="new-mail-popup-cc-row" class="index-0">
+          <div id="new-mail-popup-to-row" class="index-1">
             <input
-              id="new-mail-popup-cc"
+              id="new-mail-popup-to-input"
               class="form-control"
               type="text"
-              placeholder="BCC"
+              placeholder="To"
+              aria-label="To"
+              autocomplete="off"
+            />
+            <p id="new-mail-popup-toggle-cc" class="scale-click">CC</p>
+          </div>
+
+          <div id="new-mail-popup-cc-row" class="index-0">
+            <input
+              id="new-mail-popup-cc-input"
+              class="form-control"
+              type="text"
+              placeholder="CC"
               aria-label="toggle bcc"
               autocomplete="off"
             />
-            <p id="new-mail-popup-toggle-bcc" class="scale-click">BCC</p>
+            <p id="new-mail-popup-bcc-toggle" class="scale-click">BCC</p>
           </div>
 
           <input
-            id="new-mail-popup-bcc"
+            id="new-mail-popup-bcc-input"
             class="form-control index-0"
             type="text"
             placeholder="BCC"
             aria-label="bcc"
             autocomplete="off"
           />
-
-          <input
-            id="new-mail-popup-subject"
-            class="form-control index-1"
-            type="text"
-            placeholder="Subject"
-            aria-label="subject"
-            autocomplete="off"
-          />
         </div>
 
-        <textarea id="new-mail-popup-body" class="scroll index-1"></textarea>
+        <textarea id="new-mail-popup-body" class="scroll index-2"></textarea>
       </div>
     </div>
   </body>

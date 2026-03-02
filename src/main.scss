@@ -4,8 +4,10 @@ $color-secondary-background: rgb(38, 38, 38);
 $color-secondary-background-action: rgb(42, 42, 42);
 $color-box-shadow: rgba(71, 71, 71, 0.251);
 $color-border: rgb(71, 71, 71);
-$color-font: rgb(116, 116, 116);
-$color-focus: $color-font;
+$color-secondary-font: rgb(116, 116, 116);
+$color-focus: $color-secondary-font;
+$color-primary-font: rgb(222, 226, 230);
+$color-primary-font-hover: white;
 
 html,
 body {
@@ -39,8 +41,6 @@ body {
   display: flex;
   align-items: center;
 
-  cursor: pointer;
-
   width: 79px;
   background-color: $color-secondary-background;
   border: 1px solid $color-border;
@@ -49,16 +49,18 @@ body {
   &:hover {
     background-color: $color-secondary-background-action;
   }
-}
 
-#new-mail-button-icon {
-  width: 22px;
-  margin: 5px 8px;
-}
+  #new-mail-button-icon {
+    width: 22px;
+    margin: 0px 8px;
+    fill: $color-primary-font;
+  }
 
-#new-mail-button-text {
-  margin: 0;
-  user-select: none;
+  #new-mail-button-text {
+    margin: 0;
+    user-select: none;
+    fill: $color-primary-font;
+  }
 }
 
 #mail-searchbar {
@@ -87,13 +89,13 @@ body {
   margin: 0px 4px 0px 5px;
 
   & > path {
-    fill: $color-font;
+    fill: $color-secondary-font;
   }
 }
 
 #search-text {
   margin: 0;
-  color: $color-font;
+  color: $color-secondary-font;
 }
 
 #mail-searchbar-input {
@@ -104,7 +106,7 @@ body {
   padding: 0;
 
   &::placeholder {
-    color: $color-font;
+    color: $color-secondary-font;
   }
 
   // disable blue focus color for all browsers
@@ -130,14 +132,10 @@ body {
   height: 105px;
   border-radius: 10px;
 
-  cursor: pointer;
-
   background-color: $color-secondary-background;
   border: 1px solid $color-border;
 
   user-select: none;
-
-  transition: transform 100ms ease;
 
   &:active {
     transform: scale(0.98);
@@ -235,6 +233,16 @@ $new-mail-popup-top-y-gap: 5px;
   &.maximized {
     height: calc(100vh * 0.96);
   }
+
+  svg > path {
+    fill: $color-primary-font;
+  }
+  svg:hover > path {
+    fill: $color-primary-font-hover;
+  }
+  svg.disabled > path {
+    fill: $color-secondary-font;
+  }
 }
 
 #new-mail-popup-topbar {
@@ -243,10 +251,13 @@ $new-mail-popup-top-y-gap: 5px;
 
   position: relative;
 
-  transition: transform 100ms ease;
+  p {
+    font-size: 20px;
+    margin: 0;
+  }
 }
 
-#new-mail-popup-to-row {
+#new-mail-popup-subject-row {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -261,46 +272,44 @@ $new-mail-popup-top-y-gap: 5px;
     height: 100%;
     padding: 6px 0px;
     flex-shrink: 0;
-
-    cursor: pointer;
   }
 
   & > p {
     font-size: 20px;
   }
+}
 
-  & > p:hover,
-  & > svg:hover > path {
-    fill: white;
-    color: white;
+#new-mail-popup-to-row {
+  display: flex;
+  flex-direction: row;
+  height: $new-mail-popup-row-height;
+
+  #new-mail-popup-to-input {
+    width: 345px;
+    border-radius: 10px;
+    background-color: $color-clear;
+    height: $new-mail-popup-row-height;
+
+    &:focus {
+      border-color: $color-focus;
+      box-shadow: 0 0 0 0.25rem $color-box-shadow;
+    }
+
+    #new-mail-popup.minimized & {
+      border-radius: 14px;
+      margin-right: 4px;
+    }
+  }
+
+  #new-mail-popup-toggle-cc {
+    flex: 1;
+    padding-left: 13px;
+    user-select: none;
   }
 }
 
-#new-mail-popup-to {
-  flex: 1;
-  border-radius: 10px;
-  background-color: $color-clear;
-
-  &:focus {
-    border-color: $color-focus;
-    box-shadow: 0 0 0 0.25rem $color-box-shadow;
-  }
-
-  #new-mail-popup.minimized & {
-    border-radius: 14px;
-    margin-right: 4px;
-  }
-}
-
-#new-mail-popup-toggle-cc {
-  margin: 0;
-  padding: 0px 2px;
-  cursor: pointer;
-  user-select: none;
-}
-
-#new-mail-popup-cc,
-#new-mail-popup-bcc,
+#new-mail-popup-cc-input,
+#new-mail-popup-bcc-input,
 #new-mail-popup-subject {
   height: $new-mail-popup-row-height;
   border-radius: 10px;
@@ -320,16 +329,16 @@ $new-mail-popup-top-y-gap: 5px;
 
   transition: transform 50ms ease;
 
-  &#new-mail-popup-to-row {
+  &#new-mail-popup-subject-row {
     z-index: 3;
   }
-  &#new-mail-popup-cc-row {
+  &#new-mail-popup-to-row {
     z-index: 2;
   }
-  &#new-mail-popup-bcc {
+  &#new-mail-popup-cc-row {
     z-index: 1;
   }
-  &#new-mail-popup-subject {
+  &#new-mail-popup-bcc-row {
     z-index: 0;
   }
 
@@ -360,21 +369,15 @@ $new-mail-popup-top-y-gap: 5px;
   align-items: center;
   gap: 7px;
 
-  height: 35px;
+  height: $new-mail-popup-row-height;
 
   margin-right: 2px;
 }
 
-#new-mail-popup-cc,
-#new-mail-popup-bcc {
+#new-mail-popup-cc-input,
+#new-mail-popup-bcc-input {
   width: 100%;
   height: $new-mail-popup-row-height;
-}
-
-#new-mail-popup-toggle-bcc {
-  font-size: 20px;
-  margin: 0;
-  cursor: pointer;
 }
 
 #new-mail-popup-body {
@@ -386,6 +389,8 @@ $new-mail-popup-top-y-gap: 5px;
   border: 0px;
   outline: none;
   resize: none;
+
+  transition: height 80ms ease;
 
   // TODO can probably be improved with sass function.
   // resize the text area depending on the rows taken up by the topbar.
@@ -401,10 +406,15 @@ $new-mail-popup-top-y-gap: 5px;
   }
   &.index-2 {
     height: calc(
-      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 3)
+      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 2)
     );
   }
   &.index-3 {
+    height: calc(
+      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 3)
+    );
+  }
+  &.index-4 {
     height: calc(
       100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 4)
     );
@@ -418,7 +428,7 @@ $new-mail-popup-top-y-gap: 5px;
 
 .scroll::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: $color-font;
+  background: $color-secondary-font;
   cursor: default;
 }
 
@@ -427,9 +437,7 @@ $new-mail-popup-top-y-gap: 5px;
 }
 
 .scale-click {
-  transition: transform 50ms ease;
   user-select: none;
-  cursor: pointer;
 }
 
 .scale-click:active {
