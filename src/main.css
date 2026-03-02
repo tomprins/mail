@@ -151,7 +151,6 @@ body {
 }
 
 #new-mail-popup {
-  flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -159,22 +158,27 @@ body {
   left: 20px;
   bottom: 20px;
   right: 20px;
+  padding: 10px 12px;
   height: 40vh;
   border-radius: 20px;
   background-color: rgb(38, 38, 38);
-  transition: transform 80ms ease, height 80ms ease;
+  transition:
+    transform 80ms ease,
+    height 80ms ease;
 }
 #new-mail-popup.closed {
   transform: translateY(calc(100% + 20px));
 }
 #new-mail-popup.minimized {
-  height: 51px;
+  height: 55px;
+}
+#new-mail-popup.maximized {
+  height: 96vh;
 }
 
 #new-mail-popup-topbar {
   display: flex;
   flex-direction: column;
-  margin: 8px 8px 0px 8px;
   position: relative;
   transition: transform 100ms ease;
 }
@@ -185,27 +189,26 @@ body {
   align-items: center;
   gap: 7px;
   height: 35px;
-  margin-right: 2px;
+  padding-right: 2px;
   background-color: rgb(38, 38, 38);
 }
 #new-mail-popup-to-row > svg {
-  max-width: 100%;
-  max-height: 100%;
-  padding: 5px 0px;
+  height: 100%;
+  padding: 6px 0px;
+  flex-shrink: 0;
   cursor: pointer;
 }
-#new-mail-popup-to-row > svg#new-mail-popup-maximize-icon {
-  padding-left: 2px;
-}
 #new-mail-popup-to-row > p {
-  font-size: 18px;
+  font-size: 20px;
 }
-#new-mail-popup-to-row > p:hover, #new-mail-popup-to-row > svg:hover > path {
+#new-mail-popup-to-row > p:hover,
+#new-mail-popup-to-row > svg:hover > path {
   fill: white;
   color: white;
 }
 
 #new-mail-popup-to {
+  flex: 1;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0);
 }
@@ -213,8 +216,9 @@ body {
   border-color: rgb(116, 116, 116);
   box-shadow: 0 0 0 0.25rem rgba(71, 71, 71, 0.251);
 }
-#new-mail-popup-to.minimized {
+#new-mail-popup.minimized #new-mail-popup-to {
   border-radius: 14px;
+  margin-right: 4px;
 }
 
 #new-mail-popup-toggle-cc {
@@ -285,14 +289,14 @@ body {
 }
 
 #new-mail-popup-toggle-bcc {
-  font-size: 18px;
+  font-size: 20px;
   margin: 0;
   cursor: pointer;
 }
 
 #new-mail-popup-body {
   margin-top: auto;
-  padding: 12px 14px;
+  padding: 12px 0px;
   background-color: rgba(0, 0, 0, 0);
   border: 0px;
   outline: none;
