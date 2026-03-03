@@ -9,6 +9,10 @@ $color-focus: $color-secondary-font;
 $color-primary-font: rgb(222, 226, 230);
 $color-primary-font-hover: white;
 
+$new-mail-popup-row-height: 35px;
+$new-mail-popup-top-y-padding: 10px;
+$new-mail-popup-top-y-gap: 5px;
+
 html,
 body {
   height: 100vh;
@@ -191,10 +195,6 @@ body {
   overflow: auto;
 }
 
-$new-mail-popup-row-height: 35px;
-$new-mail-popup-top-y-padding: 10px;
-$new-mail-popup-top-y-gap: 5px;
-
 #new-mail-popup {
   display: flex;
   flex-direction: column;
@@ -254,6 +254,7 @@ $new-mail-popup-top-y-gap: 5px;
   p {
     font-size: 20px;
     margin: 0;
+    text-align: center;
   }
 }
 
@@ -261,7 +262,7 @@ $new-mail-popup-top-y-gap: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
 
   height: $new-mail-popup-row-height;
   padding-right: 2px;
@@ -285,7 +286,7 @@ $new-mail-popup-top-y-gap: 5px;
   height: $new-mail-popup-row-height;
 
   #new-mail-popup-to-input {
-    width: 345px;
+    width: 100%;
     border-radius: 10px;
     background-color: $color-clear;
     height: $new-mail-popup-row-height;
@@ -302,9 +303,8 @@ $new-mail-popup-top-y-gap: 5px;
   }
 
   #new-mail-popup-toggle-cc {
-    flex: 1;
-    padding-left: 13px;
     user-select: none;
+    padding: 0px 3px 0px 14px;
   }
 }
 
@@ -367,11 +367,13 @@ $new-mail-popup-top-y-gap: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 7px;
 
   height: $new-mail-popup-row-height;
 
-  margin-right: 2px;
+  #new-mail-popup-toggle-bcc {
+    user-select: none;
+    padding-left: 6px;
+  }
 }
 
 #new-mail-popup-cc-input,
@@ -383,7 +385,8 @@ $new-mail-popup-top-y-gap: 5px;
 #new-mail-popup-body {
   margin-top: auto;
 
-  padding: 12px 0px;
+  padding-top: 12px;
+  margin-bottom: 12px;
 
   background-color: $color-clear;
   border: 0px;
@@ -396,28 +399,43 @@ $new-mail-popup-top-y-gap: 5px;
   // resize the text area depending on the rows taken up by the topbar.
   &.index-0 {
     height: calc(
-      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 1)
-    );
-  }
-  &.index-1 {
-    height: calc(
       100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 2)
     );
   }
   &.index-2 {
     height: calc(
-      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 2)
+      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 3)
     );
   }
   &.index-3 {
     height: calc(
-      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 3)
+      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 4)
     );
   }
   &.index-4 {
     height: calc(
-      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 4)
+      100% - (($new-mail-popup-row-height + $new-mail-popup-top-y-gap) * 5)
     );
+  }
+}
+
+#new-mail-popup-bottom-bar {
+  display: flex;
+  flex-direction: row;
+
+  height: $new-mail-popup-row-height;
+
+  #new-mail-pop-send-icon {
+    margin-left: auto;
+    aspect-ratio: 1/1;
+
+    path {
+      fill: $color-primary-font;
+    }
+
+    path:hover {
+      fill: $color-primary-font-hover;
+    }
   }
 }
 

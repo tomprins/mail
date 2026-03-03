@@ -188,13 +188,14 @@ body {
 #new-mail-popup-topbar p {
   font-size: 20px;
   margin: 0;
+  text-align: center;
 }
 
 #new-mail-popup-subject-row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
   height: 35px;
   padding-right: 2px;
   background-color: rgb(38, 38, 38);
@@ -214,7 +215,7 @@ body {
   height: 35px;
 }
 #new-mail-popup-to-row #new-mail-popup-to-input {
-  width: 345px;
+  width: 100%;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0);
   height: 35px;
@@ -228,9 +229,8 @@ body {
   margin-right: 4px;
 }
 #new-mail-popup-to-row #new-mail-popup-toggle-cc {
-  flex: 1;
-  padding-left: 13px;
   user-select: none;
+  padding: 0px 3px 0px 14px;
 }
 
 #new-mail-popup-cc-input,
@@ -282,9 +282,11 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 7px;
   height: 35px;
-  margin-right: 2px;
+}
+#new-mail-popup-cc-row #new-mail-popup-toggle-bcc {
+  user-select: none;
+  padding-left: 6px;
 }
 
 #new-mail-popup-cc-input,
@@ -295,7 +297,8 @@ body {
 
 #new-mail-popup-body {
   margin-top: auto;
-  padding: 12px 0px;
+  padding-top: 12px;
+  margin-bottom: 12px;
   background-color: rgba(0, 0, 0, 0);
   border: 0px;
   outline: none;
@@ -303,19 +306,32 @@ body {
   transition: height 80ms ease;
 }
 #new-mail-popup-body.index-0 {
-  height: calc(100% - 40px);
-}
-#new-mail-popup-body.index-1 {
   height: calc(100% - 80px);
 }
 #new-mail-popup-body.index-2 {
-  height: calc(100% - 80px);
-}
-#new-mail-popup-body.index-3 {
   height: calc(100% - 120px);
 }
-#new-mail-popup-body.index-4 {
+#new-mail-popup-body.index-3 {
   height: calc(100% - 160px);
+}
+#new-mail-popup-body.index-4 {
+  height: calc(100% - 200px);
+}
+
+#new-mail-popup-bottom-bar {
+  display: flex;
+  flex-direction: row;
+  height: 35px;
+}
+#new-mail-popup-bottom-bar #new-mail-pop-send-icon {
+  margin-left: auto;
+  aspect-ratio: 1/1;
+}
+#new-mail-popup-bottom-bar #new-mail-pop-send-icon path {
+  fill: rgb(222, 226, 230);
+}
+#new-mail-popup-bottom-bar #new-mail-pop-send-icon path:hover {
+  fill: white;
 }
 
 .scroll::-webkit-scrollbar {

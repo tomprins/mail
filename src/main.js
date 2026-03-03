@@ -41,7 +41,7 @@ function initialize() {
   const maximizeIcon = document.getElementById("new-mail-popup-maximize-icon");
   const minimizeIcon = document.getElementById("new-mail-popup-minimize-icon");
   const toggleCCIcon = document.getElementById("new-mail-popup-toggle-cc");
-  const toggleBCCIcon = document.getElementById("new-mail-popup-bcc-toggle");
+  const toggleBCCIcon = document.getElementById("new-mail-popup-toggle-bcc");
   const createMailBody = document.getElementById("new-mail-popup-body");
 
   closeIcon.addEventListener("mousedown", function (event) {
